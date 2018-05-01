@@ -1,2 +1,79 @@
-<h1>Pictureboard#index</h1>
-<p>Find me in app/views/pictureboard/index.html.erb</p>
+<%= form_for(@post, html: { multipart: true, class: "dropzone"}, url: posts_path) do |f|  %>
+  <div class="fallback">
+    <%= f.file_field :image %><br>
+    <%= f.submit "Upload" %>
+  </div>
+<% end %>
+<br/>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>
+        #
+      </th>
+      <th>
+        Name
+      </th>
+      <th>
+        Image
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @posts.each_with_index do |post, index| %>
+      <tr>
+        <td>
+          <%= index %>
+        </td>
+        <td>
+          <%= post.user.email %>
+        </td>
+        <td>
+          <%= image_tag post.image.url , height: '200', width: '200'%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function(){
+    // disable auto discover
+    Dropzone.autoDiscover = false;
+
+    // grap our upload form by its id
+    $("#new_post").dropzone({
+      // restrict image size to a maximum 1MB
+      maxFilesize: 1,
+      // changed the passed param to one accepted by
+      // our rails app
+      paramName: "posts[image]",
+      // show remove links on each image upload
+      addRemoveLinks: true,
+      // if the upload was successful
+      success: function(file, response){
+        debugger;
+        // find the remove button link of the uploaded file and give it an id
+        // based of the fileID response from the server
+        $(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
+        // add the dz-success class (the green tick sign)
+        $(file.previewElement).addClass("dz-success");
+      },
+      //when the remove button is clicked
+      removedfile: function(file){
+        // grap the id of the uploaded file we set earlier
+        var id = $(file.previewTemplate).find('.dz-remove').attr('id'); 
+
+        // make a DELETE ajax request to delete the file
+        $.ajax({
+          type: 'DELETE',
+          url: '/uploads/' + id,
+          success: function(data){
+            console.log(data.message);
+          }
+        });
+      }
+    }); 
+  });
+</script>

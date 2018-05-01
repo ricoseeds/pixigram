@@ -13,5 +13,7 @@
 //= require rails-ujs
 //= require turbolinks
 //= require jquery
+//= require jquery-fileupload/basic
+//= require dropzone
 //= require bootstrap-sprockets
 //= require_tree .
