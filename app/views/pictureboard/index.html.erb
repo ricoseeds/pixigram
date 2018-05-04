@@ -1,3 +1,22 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive" >
+      <table class="table table-bordered" id="all_users" style="table-layout: fixed;word-wrap: break-word;">
+        <tbody>
+          <tr>
+            <% User.all.each do |user| %>
+              <td id="<%= dom_id(user) %>"style="width: 300px;overflow: auto;">
+                <%= user.email.split("@").first %>
+                <%= link_to "subscribe", follows_path(user_id: user.id), remote: true, method: :post, class: "btn btn-warning btn-xs" %>              
+              </td>
+            <% end%>  
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <%= form_for(@post, html: { multipart: true, class: "dropzone"}, url: posts_path) do |f|  %>
   <div class="fallback">
     <%= f.file_field :image %><br>
@@ -6,37 +25,26 @@
 <% end %>
 <br/>
 <div class="row">
-  <div class="table-responsive col-md-10">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>
-            #
-          </th>
-          <th>
-            Name
-          </th>
-          <th>
-            Image
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @posts.each_with_index do |post, index| %>
-          <tr>
-            <td>
-              <%= index %>
-            </td>
-            <td>
-              <%= post.user.email %>
-            </td>
-            <td>
-              <%= image_tag post.image.url , height: '200', width: '200'%>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="col-md-10">
+
+
+    <% @posts.each_slice(3) do | posts_in_a_row | %>
+      <% posts_in_a_row.each do |post| %>
+        <div class="col-md-3">
+          <div class="row">
+            <div class="thumbnail">
+              <%= image_tag post.image.url, style: "width:100%"%>
+              <div class="caption">
+                <p>Posted by <b><%= post.user.email.split("@").first %></b>
+                   at <%= post.created_at.strftime("%d %b %y") %> 
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
   </div>
   <div class="table-responsive col-md-2 panel panel-default" id="followers_panel">
     <table class="table table-bordered table-responsive" id="followers">
@@ -102,5 +110,7 @@
   });
 </script>
 <style type="text/css">
-
+  .thumbnail {
+margin-right: 10px;
+}
 </style>

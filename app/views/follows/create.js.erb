@@ -1,0 +1,5 @@
+$("#all_users #<%= dom_id(@user)%>").fadeOut(300, function(){ 
+  $(this).remove();
+  $("#follower_count").html(parseInt($("#follower_count").html()) + 1 );
+  $("#followers").append("<tr id=<%= dom_id(@user) %> ><td> <%= @user.email %><a class=\"btn btn-success btn-xs\" data-remote=\"true\" rel=\"nofollow\" data-method=\"delete\" href=\"/follows/<%= @user.id %>\">unsubscribe</a></td></tr>")
+});

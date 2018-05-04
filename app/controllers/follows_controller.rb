@@ -3,7 +3,7 @@ class FollowsController < ApplicationController
   respond_to :js
 
   def create
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
     current_user.follow(@user)
     respond_to do |format|
       format.js {}

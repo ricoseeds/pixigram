@@ -1,4 +1,4 @@
-$("#<%= dom_id(@user)%>").fadeOut(300, function(){ 
+$("#followers #<%= dom_id(@user)%>").fadeOut(300, function(){ 
     $(this).remove();
     $("#follower_count").html(parseInt($("#follower_count").html()) - 1 );
 });
