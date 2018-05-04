@@ -5,38 +5,62 @@
   </div>
 <% end %>
 <br/>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>
-        #
-      </th>
-      <th>
-        Name
-      </th>
-      <th>
-        Image
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @posts.each_with_index do |post, index| %>
-      <tr>
-        <td>
-          <%= index %>
-        </td>
-        <td>
-          <%= post.user.email %>
-        </td>
-        <td>
-          <%= image_tag post.image.url , height: '200', width: '200'%>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<div class="row">
+  <div class="table-responsive col-md-10">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            #
+          </th>
+          <th>
+            Name
+          </th>
+          <th>
+            Image
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @posts.each_with_index do |post, index| %>
+          <tr>
+            <td>
+              <%= index %>
+            </td>
+            <td>
+              <%= post.user.email %>
+            </td>
+            <td>
+              <%= image_tag post.image.url , height: '200', width: '200'%>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="table-responsive col-md-2 panel panel-default" id="followers_panel">
+    <table class="table table-bordered table-responsive" id="followers">
+      <thead>
+        <th>
+          Followed
+          <span class="badge badge-danger" id="follower_count">
+           <%= @followed_users.count %>
+          </span>
+        </th>
+      </thead>
+      <tbody style="display: block; height: 300px; overflow: auto;">
+        <% @followed_users.each do |user| %>
+          <tr id="<%= dom_id(user) %>">
+            <td>
+              <%= user.email %><br/>
+              <%= link_to "unsubscribe", follow_path(user), remote: true, method: :delete, class: "btn btn-success btn-xs" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 <script>
   $(document).ready(function(){
     // disable auto discover
@@ -77,3 +101,6 @@
     }); 
   });
 </script>
+<style type="text/css">
+
+</style>

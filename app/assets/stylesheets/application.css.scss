@@ -19,3 +19,26 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
  @import "font-awesome";
+ 
+  #followers_panel {
+    border-radius: 20px;
+  }
+  #followers {
+
+  }
+  .dropzone{
+    border-radius: 40px;
+  }
+
+  .badge {
+    background-color: #cc2222;
+    border-radius: 2px;
+  }
+
+  .panel {
+    background-color: ghostwhite;
+  }
+
+  .btn-xs {
+    border-radius: 20px;
+  }

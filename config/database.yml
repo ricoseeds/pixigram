@@ -19,7 +19,7 @@ default: &default
   encoding: utf8
   pool: 5
   host: localhost
-  username: argha
+  username: arghachakraborty
   password:
     
 development:
