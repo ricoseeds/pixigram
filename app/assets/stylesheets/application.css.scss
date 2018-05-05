@@ -18,6 +18,9 @@
  @import "bootstrap";
  @import "font-awesome";
 
+body {
+  background-color: #fafdfb;
+}
 #followers_panel {
   border-radius: 20px;
 }
@@ -50,8 +53,15 @@
     border: 8px solid #ddd;
 }
 .thumbnail {
-margin-right: 10px;
+	margin-right: 10px;
+	overflow: auto;
 }
+.pull-left {
+  margin-left: 55px;
+}
+
+
+
 .navbar-brand > img {
     display: block;
     height: 25px;

@@ -19,8 +19,8 @@ default: &default
   encoding: utf8
   pool: 5
   host: localhost
-  username: arghachakraborty
-  password:
+  username: <%= ENV["USERNAME"] %>
+  password: <%= ENV["PASSWORD"] %>
     
 development:
   <<: *default

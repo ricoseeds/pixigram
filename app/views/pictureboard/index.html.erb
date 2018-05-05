@@ -1,24 +1,9 @@
 <%= javascript_include_tag "dropzone" %>
-
-
-
-<div class="row">
-  <div class="col-md-12">
-    <div class="table-responsive" >
-      <table class="table table-bordered" id="all_users" style="table-layout: fixed;word-wrap: break-word;">
-        <tbody>
-          <tr>
-            <% User.all.each do |user| %>
-              <td id="<%= dom_id(user) %>"style="width: 300px;overflow: auto;">
-                <%= user.email.split("@").first %>
-                <%= link_to "subscribe", follows_path(user_id: user.id), remote: true, method: :post, class: "btn btn-warning btn-xs subscribe" %>              
-              </td>
-            <% end%>  
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="optimiser pull-left">
+  <button class="fa fa-window-minimize" id="minimize">
+  </button>
+  <button class="fa fa-window-maximize" id="maximize">
+  </button>
 </div>
 <div class="dropzone">
   <%= form_for(@post, html: { multipart: true, class: "dropzone dz-clickable"}, url: posts_path) do |f|  %>
@@ -63,13 +48,27 @@
 </div>
 <script>
   $(document).ready(function(){
+    var uploader_form ;
+    $("#minimize").click(function(){
+      $(".dropzone").slideUp(300, function(){ 
+        // $(this).toggleClass("hide");
+      });
+      // $(".dropzone").toggleClass("hide");
+    });
+    $("#maximize").click(function(){
+      $(".dropzone").slideDown(300, function(){ 
+        // $(this).toggleClass("hide");
+      });
+      // $(".dropzone").toggleClass("hide");
+    });
+
     // disable auto discover
     Dropzone.autoDiscover = false;
 
     // grap our upload form by its id
     $("#new_post").dropzone({
       // restrict image size to a maximum 1MB
-      maxFilesize: 1,
+      maxFilesize: 10,
       // changed the passed param to one accepted by
       // our rails app
       paramName: "posts[image]",
