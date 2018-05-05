@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+  	<%= favicon_link_tag 'paw.png', type: 'image/png' %> 
     <title>Pixigram</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,16 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default navbar-inverse">
+			<%= link_to image_tag("paw.png", alt: "logo"), '/', class: 'navbar-brand' %>
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
 				<a class="navbar-brand" href="#"><b>Pixigram</b></a>
 			</div>
 	

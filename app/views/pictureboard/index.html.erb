@@ -1,3 +1,7 @@
+<%= javascript_include_tag "dropzone" %>
+
+
+
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive" >
@@ -16,13 +20,18 @@
     </div>
   </div>
 </div>
+<div class="dropzone">
+  <%= form_for(@post, html: { multipart: true, class: "dropzone dz-clickable"}, url: posts_path) do |f|  %>
+    <div class="dz-message">Drop files here or click to upload.
+        <br> <span class="note">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
 
-<%= form_for(@post, html: { multipart: true, class: "dropzone"}, url: posts_path) do |f|  %>
-  <div class="fallback">
-    <%= f.file_field :image %><br>
-    <%= f.submit "Upload" %>
-  </div>
+    </div>
+    <div class="fallback">
+      <%= f.file_field :image %><br>
+      <%= f.submit "Upload" %>
+    </div>
 <% end %>
+</div>
 <br/>
 <div class="row">
   <div class="col-md-10" id="picture_panel">
