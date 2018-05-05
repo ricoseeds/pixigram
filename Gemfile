@@ -38,6 +38,13 @@ gem 'bootstrap-sass', '~> 3.3.7'
 gem "shrine"
 gem "devise"
 gem 'jquery-rails'
+gem 'roda'
+gem "jquery-fileupload-rails"
+gem 'dropzonejs-rails'
+gem 'pry-rails'
+gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
+gem 'rails-jquery-autocomplete'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

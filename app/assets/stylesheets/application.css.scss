@@ -10,9 +10,47 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require jquery.fileupload
+ *= require jquery.fileupload-ui
+ *= require dropzone/dropzone
  *= require_tree .
  *= require_self
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
  @import "font-awesome";
+
+#followers_panel {
+  border-radius: 20px;
+}
+#followers {
+
+}
+.dropzone{
+  border-radius: 40px;
+}
+
+.badge {
+  background-color: #cc2222;
+  border-radius: 2px;
+}
+
+.panel {
+  background-color: ghostwhite;
+}
+
+.btn-xs {
+  border-radius: 20px;
+}
+.container {
+  width: 90%;
+}
+#all_users {
+  margin-bottom: 40px;	
+}
+.table-bordered {
+    border: 8px solid #ddd;
+}
+.thumbnail {
+margin-right: 10px;
+}

@@ -1,2 +1,121 @@
-<h1>Pictureboard#index</h1>
-<p>Find me in app/views/pictureboard/index.html.erb</p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive" >
+      <table class="table table-bordered" id="all_users" style="table-layout: fixed;word-wrap: break-word;">
+        <tbody>
+          <tr>
+            <% User.all.each do |user| %>
+              <td id="<%= dom_id(user) %>"style="width: 300px;overflow: auto;">
+                <%= user.email.split("@").first %>
+                <%= link_to "subscribe", follows_path(user_id: user.id), remote: true, method: :post, class: "btn btn-warning btn-xs subscribe" %>              
+              </td>
+            <% end%>  
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%= form_for(@post, html: { multipart: true, class: "dropzone"}, url: posts_path) do |f|  %>
+  <div class="fallback">
+    <%= f.file_field :image %><br>
+    <%= f.submit "Upload" %>
+  </div>
+<% end %>
+<br/>
+<div class="row">
+  <div class="col-md-10" id="picture_panel">
+
+
+  </div>
+  <div class="table-responsive col-md-2 panel panel-default" id="followers_panel">
+    <table class="table table-bordered table-responsive" id="followers">
+      <thead>
+        <th>
+          Followed
+          <span class="badge badge-danger" id="follower_count">
+           <%= @followed_users.count %>
+          </span>
+        </th>
+      </thead>
+      <tbody style="display: block; height: 300px; overflow: auto;">
+        <% @followed_users.each do |user| %>
+          <tr id="<%= dom_id(user) %>">
+            <td>
+              <%= user.email %><br/>
+              <%= link_to "unsubscribe", follow_path(user), remote: true, method: :delete, class: "btn btn-success btn-xs unsubscribe" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    // disable auto discover
+    Dropzone.autoDiscover = false;
+
+    // grap our upload form by its id
+    $("#new_post").dropzone({
+      // restrict image size to a maximum 1MB
+      maxFilesize: 1,
+      // changed the passed param to one accepted by
+      // our rails app
+      paramName: "posts[image]",
+      // show remove links on each image upload
+      addRemoveLinks: true,
+      // if the upload was successful
+      success: function(file, response){
+        // find the remove button link of the uploaded file and give it an id
+        get_posts();
+        // based of the fileID response from the server
+        $(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
+        // add the dz-success class (the green tick sign)
+        $(file.previewElement).addClass("dz-success");
+      },
+      //when the remove button is clicked
+      removedfile: function(file){
+        // grap the id of the uploaded file we set earlier
+        var id = $(file.previewTemplate).find('.dz-remove').attr('id'); 
+
+        // make a DELETE ajax request to delete the file
+        $.ajax({
+          type: 'DELETE',
+          url: '/uploads/' + id,
+          success: function(data){
+            console.log(data.message);
+          }
+        });
+      }
+    }); 
+    get_posts();
+  });
+  Array.prototype.eachSlice = function (size, callback){
+  for (var i = 0, l = this.length; i < l; i += size){
+    callback.call(this, this.slice(i, i + size))
+  }
+};
+
+function get_posts(){
+  $( "#picture_panel" ).empty();
+  $.get( "posts/subscribed_posts", function( data ) {
+  var post_div = ''
+  data.eachSlice(3, function(posts){ 
+    $.each( posts, function( index, a_post ) {
+      post_div = "<div class=\"col-md-3\"><div class=\"row\"><div class=\"thumbnail\">";
+      post_div += "<img style=\"width:100%\"" + " src=\"" 
+      + a_post.image_url + "\" alt=\"Not Found\">"
+      post_div += "<div class=\"caption\">"
+      post_div += "Posted by<b><i> " + a_post.email + "</i></b> on " + a_post.created_at
+      post_div += "</div></div></div></div>"
+      $("#picture_panel").append(post_div);
+    });
+  });
+});
+}
+</script>
+<style type="text/css">
+
+</style>
