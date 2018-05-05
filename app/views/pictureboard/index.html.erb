@@ -69,7 +69,6 @@
       // if the upload was successful
       success: function(file, response){
         // find the remove button link of the uploaded file and give it an id
-        debugger;
         get_posts();
         // based of the fileID response from the server
         $(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
