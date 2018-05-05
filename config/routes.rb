@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :pictureboard, only: [:index]
-  resources :posts, only: [:create]
+  resources :posts, only: [:create] do 
+  	collection do 
+  		get :subscribed_posts
+  	end
+  end
   resources :follows, only:[:create, :destroy]
   root "pictureboard#index"
   # mount ImageUploader::UploadEndpoint => "/posts/images"

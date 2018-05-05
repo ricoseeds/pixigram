@@ -7,7 +7,7 @@
             <% User.all.each do |user| %>
               <td id="<%= dom_id(user) %>"style="width: 300px;overflow: auto;">
                 <%= user.email.split("@").first %>
-                <%= link_to "subscribe", follows_path(user_id: user.id), remote: true, method: :post, class: "btn btn-warning btn-xs" %>              
+                <%= link_to "subscribe", follows_path(user_id: user.id), remote: true, method: :post, class: "btn btn-warning btn-xs subscribe" %>              
               </td>
             <% end%>  
           </tr>
@@ -25,25 +25,8 @@
 <% end %>
 <br/>
 <div class="row">
-  <div class="col-md-10">
+  <div class="col-md-10" id="picture_panel">
 
-
-    <% @posts.each_slice(3) do | posts_in_a_row | %>
-      <% posts_in_a_row.each do |post| %>
-        <div class="col-md-3">
-          <div class="row">
-            <div class="thumbnail">
-              <%= image_tag post.image.url, style: "width:100%"%>
-              <div class="caption">
-                <p>Posted by <b><%= post.user.email.split("@").first %></b>
-                   at <%= post.created_at.strftime("%d %b %y") %> 
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
 
   </div>
   <div class="table-responsive col-md-2 panel panel-default" id="followers_panel">
@@ -61,7 +44,7 @@
           <tr id="<%= dom_id(user) %>">
             <td>
               <%= user.email %><br/>
-              <%= link_to "unsubscribe", follow_path(user), remote: true, method: :delete, class: "btn btn-success btn-xs" %>
+              <%= link_to "unsubscribe", follow_path(user), remote: true, method: :delete, class: "btn btn-success btn-xs unsubscribe" %>
             </td>
           </tr>
         <% end %>
@@ -85,8 +68,9 @@
       addRemoveLinks: true,
       // if the upload was successful
       success: function(file, response){
-        debugger;
         // find the remove button link of the uploaded file and give it an id
+        debugger;
+        get_posts();
         // based of the fileID response from the server
         $(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
         // add the dz-success class (the green tick sign)
@@ -107,10 +91,32 @@
         });
       }
     }); 
+    get_posts();
   });
+  Array.prototype.eachSlice = function (size, callback){
+  for (var i = 0, l = this.length; i < l; i += size){
+    callback.call(this, this.slice(i, i + size))
+  }
+};
+
+function get_posts(){
+  $( "#picture_panel" ).empty();
+  $.get( "posts/subscribed_posts", function( data ) {
+  var post_div = ''
+  data.eachSlice(3, function(posts){ 
+    $.each( posts, function( index, a_post ) {
+      post_div = "<div class=\"col-md-3\"><div class=\"row\"><div class=\"thumbnail\">";
+      post_div += "<img style=\"width:100%\"" + " src=\"" 
+      + a_post.image_url + "\" alt=\"Not Found\">"
+      post_div += "<div class=\"caption\">"
+      post_div += "Posted by<b><i> " + a_post.email + "</i></b> on " + a_post.created_at
+      post_div += "</div></div></div></div>"
+      $("#picture_panel").append(post_div);
+    });
+  });
+});
+}
 </script>
 <style type="text/css">
-  .thumbnail {
-margin-right: 10px;
-}
+
 </style>
