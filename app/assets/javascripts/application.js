@@ -35,7 +35,7 @@ $(document).ready(function(){
 	        for( var i = 0; i<len; i++){
 	          var id = response[i].id;
 	          var fname = response[i].email;
-	          $("#searchResult").append("<li class=\"list-group-item\" value='"+id+"'>"+fname+"</li>");
+	          $("#searchResult").append("<li class=\"list-group-item\" value='"+id+"'><br/>"+fname+getList(response[i])+"</li>");
 	        }
 	      }
 	  	});
@@ -50,7 +50,7 @@ $(document).ready(function(){
 
 
 function getList(user){
-	
+	return "<a id=user_"+user.id+" class=\"btn btn-warning btn-xs subscribe\" data-remote=\"true\" rel=\"nofollow\" data-method=\"post\" href=\"/follows?user_id="+user.id+"\">subscribe</a>";
 }
 
 
