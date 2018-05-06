@@ -1,21 +1,4 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="table-responsive" >
-      <table class="table table-bordered" id="all_users" style="table-layout: fixed;word-wrap: break-word;">
-        <tbody>
-          <tr>
-            <% User.all.each do |user| %>
-              <td id="<%= dom_id(user) %>"style="width: 300px;overflow: auto;">
-                <%= user.email.split("@").first %>
-                <%= link_to "subscribe", follows_path(user_id: user.id), remote: true, method: :post, class: "btn btn-warning btn-xs subscribe" %>              
-              </td>
-            <% end%>  
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+
 <div class="optimiser pull-left">
   <button class="fa fa-window-minimize" id="minimize">
   </button>
@@ -68,44 +51,24 @@
     var uploader_form ;
     $("#minimize").click(function(){
       $(".dropzone").slideUp(300, function(){ 
-        // $(this).toggleClass("hide");
       });
-      // $(".dropzone").toggleClass("hide");
     });
     $("#maximize").click(function(){
       $(".dropzone").slideDown(300, function(){ 
-        // $(this).toggleClass("hide");
       });
-      // $(".dropzone").toggleClass("hide");
     });
-
-    // disable auto discover
     Dropzone.autoDiscover = false;
-
-    // grap our upload form by its id
     $("#new_post").dropzone({
-      // restrict image size to a maximum 1MB
       maxFilesize: 10,
-      // changed the passed param to one accepted by
-      // our rails app
       paramName: "posts[image]",
-      // show remove links on each image upload
       addRemoveLinks: true,
-      // if the upload was successful
       success: function(file, response){
-        // find the remove button link of the uploaded file and give it an id
         get_posts();
-        // based of the fileID response from the server
         $(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
-        // add the dz-success class (the green tick sign)
         $(file.previewElement).addClass("dz-success");
       },
-      //when the remove button is clicked
       removedfile: function(file){
-        // grap the id of the uploaded file we set earlier
         var id = $(file.previewTemplate).find('.dz-remove').attr('id'); 
-
-        // make a DELETE ajax request to delete the file
         $.ajax({
           type: 'DELETE',
           url: '/uploads/' + id,
@@ -117,12 +80,6 @@
     }); 
     get_posts();
   });
-  Array.prototype.eachSlice = function (size, callback){
-  for (var i = 0, l = this.length; i < l; i += size){
-    callback.call(this, this.slice(i, i + size))
-  }
-};
-
 function get_posts(){
   $( "#picture_panel" ).empty();
   $.get( "posts/subscribed_posts", function( data ) {
@@ -141,6 +98,3 @@ function get_posts(){
 });
 }
 </script>
-<style type="text/css">
-
-</style>
