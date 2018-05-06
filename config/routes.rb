@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
+  get 'users/search'
+
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
   resources :pictureboard, only: [:index]
   resources :posts, only: [:create] do 
   	collection do 

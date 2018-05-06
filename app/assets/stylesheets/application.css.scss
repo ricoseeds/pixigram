@@ -59,9 +59,15 @@ body {
 .pull-left {
   margin-left: 55px;
 }
-
-
-
+.btn-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #fff;
+  border-radius: 20px;
+}
+#user_search {
+	border-radius: 20px;
+}
 .navbar-brand > img {
     display: block;
     height: 25px;
