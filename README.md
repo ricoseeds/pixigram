@@ -1,24 +1,18 @@
-# README
+# Pixigram -- A simple image sharing application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Getting Started
 
-Things you may want to cover:
+1. Install required Gems
 
-* Ruby version
+        $ cd path_to_pixigram && bundle install
 
-* System dependencies
+2. create database.yml and .env
 
-* Configuration
+        $ touch .env && touch config/database.yml && cp config/database.yml.example config/database.yml
 
-* Database creation
+   
 
-* Database initialization
+3. Start the web server:
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+        
+        $ rails server
