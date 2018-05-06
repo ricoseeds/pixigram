@@ -8,11 +8,13 @@
 
 2. create database.yml and .env
 
-        $ touch .env && touch config/database.yml && cp config/database.yml.example config/database.yml
+        $ cp config/database.yml.example config/database.yml
 
-   
+        $ cp .env.example .env
 
-3. Start the web server:
+3. Create and migrate database.
 
         
-        $ rails server
+        $ rails db:create && rails db:migrate 
+
+        $rails s
