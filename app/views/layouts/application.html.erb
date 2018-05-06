@@ -21,7 +21,7 @@
  				<% if current_user %>		
 	 				<%= simple_form_for :user, url: users_search_path, remote: true, html: { class: 'navbar-form navbar-left' } do |f| %>
 						<%= f.input :search, placeholder: "Search users", label: false %>
-						<%= f.submit 'Find', class: "btn btn-success"%>
+						<%#= f.submit 'Find', class: "btn btn-success"%>
 		        <ul class="list-group" id="searchResult"></ul>
 		        <!-- <div class="clear"></div> -->
 		        <div id="userDetail"></div>
@@ -53,7 +53,6 @@
   </head>
 
   <body>
-  
     <div class="container">
       <% flash.each do |key, value| %>
           <div class="alert alert-<%= key %>"><%= value %></div>
@@ -62,26 +61,3 @@
     </div>
   </body>
 </html>
-<style type="text/css">
-#searchResult{
- list-style: none;
- padding: 0.6%;
- width: 250px;
- position: absolute;
- margin: 0;
-}
-
-#searchResult li{
- background: white;
- padding: 14px;
-}
-
-#searchResult li:nth-child(even){
- background: white;
-}
-
-#searchResult li:hover{
- cursor: pointer;
-}
-
-</style>
