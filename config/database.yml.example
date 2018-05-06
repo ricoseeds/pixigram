@@ -21,7 +21,6 @@ default: &default
   host: localhost
   username: <%= ENV["USERNAME"] %>
   password: <%= ENV["PASSWORD"] %>
-
     
 development:
   <<: *default
