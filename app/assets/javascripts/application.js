@@ -29,7 +29,6 @@ $(document).ready(function(){
 	      dataType: 'json',
 	      data: {search: $(this).val()},
 	      success: function(response){
-	      	console.log(response);
 	        var len = response.length;
 	        $("#searchResult").empty();
 	        for( var i = 0; i<len; i++){

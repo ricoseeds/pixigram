@@ -20,8 +20,6 @@
 <br/>
 <div class="row">
   <div class="col-md-10" id="picture_panel">
-
-
   </div>
   <div class="table-responsive col-md-2 panel panel-default" id="followers_panel">
     <table class="table table-bordered table-responsive" id="followers">
@@ -73,7 +71,8 @@
           type: 'DELETE',
           url: '/uploads/' + id,
           success: function(data){
-            console.log(data.message);
+            // TODO
+            // console.log(data.message);
           }
         });
       }

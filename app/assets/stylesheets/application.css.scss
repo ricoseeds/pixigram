@@ -73,6 +73,31 @@ body {
     height: 25px;
     filter: invert(100%);
 }
+#searchResult{
+ list-style: none;
+ padding: 0.6%;
+ width: 250px;
+ position: absolute;
+ margin: 0;
+}
+
+#searchResult li{
+ background: white;
+ padding: 14px;
+}
+
+#searchResult li:nth-child(even){
+ background: white;
+}
+
+#searchResult li:hover{
+ cursor: pointer;
+}
+
+
+
+
+
 .dropzone, .dropzone * {
     box-sizing: border-box;
 }
