@@ -1,10 +1,3 @@
-
-<div class="optimiser pull-left">
-  <button class="fa fa-window-minimize" id="minimize">
-  </button>
-  <button class="fa fa-window-maximize" id="maximize">
-  </button>
-</div>
 <div class="dropzone">
   <%= form_for(@post, html: { multipart: true, class: "dropzone dz-clickable"}, url: posts_path) do |f|  %>
     <div class="dz-message">Drop files here or click to upload.
@@ -44,56 +37,3 @@
     </table>
   </div>
 </div>
-<script>
-  $(document).ready(function(){
-    var uploader_form ;
-    $("#minimize").click(function(){
-      $(".dropzone").slideUp(300, function(){ 
-      });
-    });
-    $("#maximize").click(function(){
-      $(".dropzone").slideDown(300, function(){ 
-      });
-    });
-    Dropzone.autoDiscover = false;
-    $("#new_post").dropzone({
-      maxFilesize: 10,
-      paramName: "posts[image]",
-      addRemoveLinks: true,
-      success: function(file, response){
-        get_posts();
-        $(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
-        $(file.previewElement).addClass("dz-success");
-      },
-      removedfile: function(file){
-        var id = $(file.previewTemplate).find('.dz-remove').attr('id'); 
-        $.ajax({
-          type: 'DELETE',
-          url: '/uploads/' + id,
-          success: function(data){
-            // TODO
-            // console.log(data.message);
-          }
-        });
-      }
-    }); 
-    get_posts();
-  });
-function get_posts(){
-  $( "#picture_panel" ).empty();
-  $.get( "posts/subscribed_posts", function( data ) {
-  var post_div = ''
-  data.eachSlice(3, function(posts){ 
-    $.each( posts, function( index, a_post ) {
-      post_div = "<div class=\"col-md-3\"><div class=\"row\"><div class=\"thumbnail\">";
-      post_div += "<img style=\"width:100%\"" + " src=\"" 
-      + a_post.image_url + "\" alt=\"Not Found\">"
-      post_div += "<div class=\"caption\">"
-      post_div += "Posted by<b><i> " + a_post.email + "</i></b> on " + a_post.created_at
-      post_div += "</div></div></div></div>"
-      $("#picture_panel").append(post_div);
-    });
-  });
-});
-}
-</script>

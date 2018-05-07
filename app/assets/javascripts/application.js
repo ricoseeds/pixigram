@@ -45,6 +45,30 @@ $(document).ready(function(){
  $(".container").on('click', function(){
  		$("#searchResult li").remove();
  });
+var uploader_form ;
+  Dropzone.autoDiscover = false;
+  $("#new_post").dropzone({
+    maxFilesize: 10,
+    paramName: "posts[image]",
+    addRemoveLinks: true,
+    success: function(file, response){
+      get_posts();
+      $(file.previewTemplate).find('.dz-remove').attr('id', response.fileID);
+      $(file.previewElement).addClass("dz-success");
+    },
+    removedfile: function(file){
+      var id = $(file.previewTemplate).find('.dz-remove').attr('id'); 
+      $.ajax({
+        type: 'DELETE',
+        url: '/uploads/' + id,
+        success: function(data){
+          // TODO
+          // console.log(data.message);
+        }
+      });
+    }
+  }); 
+  get_posts();
 });
 
 
@@ -52,4 +76,20 @@ function getList(user){
 	return "<a id=user_"+user.id+" class=\"btn btn-warning btn-xs subscribe\" data-remote=\"true\" rel=\"nofollow\" data-method=\"post\" href=\"/follows?user_id="+user.id+"\">subscribe</a>";
 }
 
-
+function get_posts(){
+  $( "#picture_panel" ).empty();
+  $.get( "posts/subscribed_posts", function( data ) {
+  var post_div = ''
+  data.eachSlice(3, function(posts){ 
+    $.each( posts, function( index, a_post ) {
+      post_div = "<div class=\"col-md-3\"><div class=\"row\"><div class=\"thumbnail\">";
+      post_div += "<img style=\"width:100%\"" + " src=\"" 
+      + a_post.image_url + "\" alt=\"Not Found\">"
+      post_div += "<div class=\"caption\">"
+      post_div += "Posted by<b><i> " + a_post.email + "</i></b> on " + a_post.created_at
+      post_div += "</div></div></div></div>"
+      $("#picture_panel").append(post_div);
+    });
+  });
+});
+}
